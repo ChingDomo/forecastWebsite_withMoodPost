@@ -21,3 +21,9 @@ This homework should be submitted **in groups**, submit your merge request to yo
 If your program cannot search for the weather (missing key), the score will be 0.
 
 In Today.jsx, there are some codes commented out. After removing the comment mark and finishing all TODOs, it should work normally.
+
+## contribution
+110010012  2,3,4,5
+110010019  2,3,4,5
+110000221  1,2,3
+110000205  1
