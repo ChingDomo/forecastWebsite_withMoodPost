@@ -4,6 +4,7 @@ import {
     Route,
     Link
 } from 'react-router-dom';
+import { useDispatch, connect } from 'react-redux';
 import {
     Collapse,
     Navbar,
@@ -18,12 +19,16 @@ import {
 import Today from 'components/Today.jsx';
 import Forecast from 'components/Forecast.jsx';
 
+import { setSearchText } from 'states/post-actions.js'
+
 import './Main.css';
 
 function Main() {
     const [navbarToggle, setNavbarToggle] = useState(false);
-    const [searchText, setSearchText] = useState('');
+    const [searchText, giveSearchText] = useState('');
     const searchEl = useRef(null);
+
+    const dispatch = useDispatch()
 
     const handleNavbarToggle = () => {
         setNavbarToggle(!navbarToggle);
@@ -32,12 +37,15 @@ function Main() {
     const handleSearchKeyPress = (e) => {
         var keyCode = e.keyCode || e.which;
         if (keyCode === 13) {
-            setSearchText(e.target.value);
+            // console.log(e.target.value)
+            giveSearchText(e.target.value);
+            dispatch(setSearchText(e.target.value))
         }
     };
 
     const handleClearSearch = () => {
-        setSearchText('');
+        giveSearchText('');
+        dispatch(setSearchText(''))
         searchEl.current.value = '';
     };
 
@@ -72,6 +80,7 @@ function Main() {
                 <Route exact path="/" render={() => (
                     <Today searchText={searchText} />
                 )} />
+
                 <Route exact path="/forecast" render={() => (
                     <Forecast />
                 )} />
@@ -84,3 +93,8 @@ function Main() {
 };
 
 export default Main;
+
+// export default connect(state => ({
+//     ...state.main,
+//     searchText: state.searchText,
+// }))(Main);

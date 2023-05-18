@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
 import {
     Alert,
@@ -12,20 +12,81 @@ import {
 
 import { getMoodIcon } from 'utilities/weather.js';
 import {
-    createPost,
-    input,
-    inputDanger,
-    toggleMood,
-    setMoodToggle,
-    selectMood
+    createPost,     // mood, text V
+    input,          // value
+    inputDanger,    // danger
+    toggleMood,     // Nein
+    setMoodToggle,  // toggle
+    selectMood      // mood
 } from 'states/post-actions.js';
 
 import './PostForm.css';
+import { useDispatch, connect, useSelector } from 'react-redux';
 
-function PostForm (props){
+function PostForm(props) {
     const inputEl = useRef(null);
 
     // TODO
+
+    // 【chun】
+    // const {
+    //     inputValue
+    //     // moodToggle
+    // } = useSelector((state) => ({
+    //     ...state.post
+    // }))
+    // 【domo】
+    const [mood, setMood] = useState('na')
+    const [inputValue, setInputValue] = useState('')
+    const [inputDangerClass, setInputDanger] = useState(false)
+    const [moodToggle, setMoodToggle] = useState(false)
+    const dispatch = useDispatch()
+
+    // 【CHUN】
+    useEffect(() => {
+        dispatch(selectMood(mood));
+    }, [mood, dispatch]);
+
+    useEffect(() => {
+        if (props.inputValue !== '') {
+            dispatch(input(inputValue));
+        }
+    }, [inputValue, dispatch]);
+
+    const handleInputChange = (e) => {
+        const text = e.target.value
+        setInputValue(text)
+        dispatch(input(text));
+        if (text) {
+            setInputDanger(false)
+            dispatch(inputDanger(inputDanger))
+        }
+    };
+
+    const handleMoodToggle = () => {
+        setMoodToggle(!moodToggle);
+        dispatch(toggleMood());
+    }
+
+    const handleDropdownSelect = (mmood) => {
+        setMood(mmood)
+        dispatch(selectMood(mmood))
+    }
+
+    const handlePost = () => {
+        if (mood === 'na') {
+            dispatch(setMoodToggle(true));
+            return;
+        }
+        if (!inputValue) {
+            dispatch(inputDanger(true))
+            return;
+        }
+
+        dispatch(createPost(mood, inputValue))
+        setMood('na')
+        setInputValue('')
+    }
 
     return (
         <div className="post-form">
@@ -65,4 +126,35 @@ PostForm.propTypes = {
 
 export default connect((state) => {
     // TODO
+    return {
+        ...state.PostForm,
+    };
 })(PostForm);
+
+
+    // const handleInputChange = (e) => {
+    //     const text = e.target.value
+    //     dispatch(input(e.target.value));
+    //     if (text) {
+    //         dispatch(inputDanger(inputDanger))
+    //     }
+    // };
+
+    // const handleMoodToggle = () => {
+    //     setMoodToggle(!moodToggle);
+    //     dispatch(toggleMood());
+    // }
+
+
+
+    // const handleSubmit = (e) => {
+    //     e.preventDefault();
+
+    //     inputEl.current.blur();
+    //     if (inputValue && inputValue.trim()) {
+    //         dispatch(submitAction(inputValue, unit));
+    //         setFormToggle(false);
+    //     } else {
+    //         dispatch(input(city));
+    //     }
+    // };

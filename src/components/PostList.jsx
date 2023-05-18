@@ -4,15 +4,20 @@ import {
     ListGroup,
     ListGroupItem
 } from 'reactstrap';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector, useDispatch, connect } from 'react-redux';
 
 import PostItem from 'components/PostItem.jsx';
+import { createPost } from 'states/post-actions.js';
 
 import './PostList.css';
+import { listPosts } from '../states/post-actions';
 
 function PostList() {
     const posts = useSelector(state => state.post.posts);
+
     //TODO
+    // 【domo】
+    const searchText = useSelector((state) => state.searchText.state)
 
     let children = (
         <ListGroupItem className='empty d-flex justify-content-center align-items-center'>
@@ -41,5 +46,6 @@ PostList.propTypes = {
     hasMore: PropTypes.bool,
     searchText: PropTypes.string
 };
+
 
 export default PostList;
