@@ -3,9 +3,9 @@ import PropTypes from 'prop-types';
 
 import './WeatherTable.css';
 
-function WeatherTable (props){
-    const {masking, unit, list} = props;
-    const weekDays = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+function WeatherTable(props) {
+    const { masking, unit, list } = props;
+    const weekDays = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
 
     return (
         <div className={`weather-table ${masking ? 'masking' : ''}`}>

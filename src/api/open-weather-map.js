@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 // TODO replace the key with yours
-const key = '';
+const key = '1601585a2bc27f0eab4f0c6149320037';
 
 export function getWeatherGroup(code) {
     let group = 'na';
@@ -35,7 +35,7 @@ export function getWeather(city, unit) {
 
     console.log(`Making request to: ${url}`);
 
-    return axios.get(url, {cancelToken: weatherSource.token}).then(function(res) {
+    return axios.get(url, { cancelToken: weatherSource.token }).then(function (res) {
         if (res.data.cod && res.data.message)
             throw new Error(res.data.message);
 
@@ -47,7 +47,7 @@ export function getWeather(city, unit) {
             temp: res.data.main.temp,
             unit: unit
         };
-    }).catch(function(err) {
+    }).catch(function (err) {
         if (axios.isCancel(err)) {
             console.error(err.message, err);
         } else {
@@ -67,53 +67,53 @@ export function getForecast(city, unit) {
     var url = `${forecastBaseUrl}&q=${encodeURIComponent(city)}&units=${unit}`;
     console.log(`Making request to: ${url}`);
 
-    return axios.get(url, {cancelToken: weatherSource.token}).then(function(res) {
+    return axios.get(url, { cancelToken: weatherSource.token }).then(function (res) {
         if (Number(res.data.cod) !== 200) {
             throw new Error(res.data.message);
         } else {
             return {
                 city: capitalize(city),
                 list: [ // forecast 24 hours
-                    {   
+                    {
                         ts: res.data.list[7].dt,
                         code: res.data.list[7].weather[0].id,
                         group: getWeatherGroup(res.data.list[7].weather[0].id),
                         description: res.data.list[7].weather[0].description,
                         temp: res.data.list[7].main.temp
                     },
-                    {   
+                    {
                         ts: res.data.list[15].dt,
                         code: res.data.list[15].weather[0].id,
                         group: getWeatherGroup(res.data.list[15].weather[0].id),
                         description: res.data.list[15].weather[0].description,
                         temp: res.data.list[15].main.temp
                     },
-                    {   
+                    {
                         ts: res.data.list[23].dt,
                         code: res.data.list[23].weather[0].id,
                         group: getWeatherGroup(res.data.list[23].weather[0].id),
                         description: res.data.list[23].weather[0].description,
                         temp: res.data.list[23].main.temp
                     },
-                    {   
+                    {
                         ts: res.data.list[31].dt,
                         code: res.data.list[31].weather[0].id,
                         group: getWeatherGroup(res.data.list[31].weather[0].id),
                         description: res.data.list[31].weather[0].description,
                         temp: res.data.list[31].main.temp
                     },
-                    {   
+                    {
                         ts: res.data.list[39].dt,
                         code: res.data.list[39].weather[0].id,
                         group: getWeatherGroup(res.data.list[39].weather[0].id),
                         description: res.data.list[39].weather[0].description,
                         temp: res.data.list[39].main.temp
                     },
-                ], 
-                unit: unit 
+                ],
+                unit: unit
             };
         }
-    }).catch(function(err) {
+    }).catch(function (err) {
         if (axios.isCancel(err)) {
             console.error(err.message, err);
         } else {

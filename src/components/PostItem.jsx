@@ -1,14 +1,35 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState, useCallback, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { Tooltip } from 'reactstrap';
 import { connect } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import moment from 'moment';
 import { getMoodIcon } from 'utilities/weather.js';
 import { createVote, setTooltipToggle, toggleTooltip } from 'states/post-actions.js';
+// id
+// id toggle
 import './PostItem.css';
 
 function PostItem(props) {
     //TODO
+
+    const { id, mood, text, ts, clearVotes, cloudsVotes, drizzleVotes, rainVotes, thunderVotes, snowVotes, windyVotes } = props;
+    const [tooltipOpen, giveTooltipOpen] = useState(false)
+    const dispatch = useDispatch()
+    const handleClick = useCallback(() => {
+        giveTooltipOpen(false)
+        dispatch(setTooltipToggle(props.id, true))
+    }, [])
+
+    const handleTooltipToggle = useCallback(() => {
+        giveTooltipOpen(true)
+        dispatch(toggleTooltip(props.id))
+    }, [])
+
+    const handleVote = useCallback((vote) => {
+        dispatch(createVote(props.id, vote))
+        dispatch(setTooltipToggle(props.id, false))
+    }, [])
 
     return (
         <div className="post-item d-flex flex-column" onClick={handleClick}>
@@ -63,6 +84,8 @@ PostItem.propTypes = {
     dispatch: PropTypes.func,
 };
 
+// export default PostItem;
+
 export default connect((state, ownProps) => ({
     tooltipOpen: state.postItem.tooltipOpen[ownProps.id] ? true : false,
-}))(PostItem);
+}), { createVote })(PostItem);

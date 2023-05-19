@@ -33,6 +33,7 @@ export function post(state = initPostState, action) {
                 hasMore: action.posts.length > 0
             };
         case '@POST/END_CREATE_VOTE':
+            console.log("inside reducer")
             var newPosts = state.posts.map(p => {
                 if (p.id === action.post.id)
                     return action.post;
@@ -59,6 +60,12 @@ export function post(state = initPostState, action) {
 
 export function searchText(state = '', action) {
     //TODO
+    switch (action.type) {
+        case '@SEARCHPOST/setSearchText':
+            return action.searchText
+        default:
+            return state
+    }
 }
 
 
@@ -73,6 +80,35 @@ const initPostFormState = {
 
 export function postForm(state = initPostFormState, action) {
     //TODO
+    switch (action.type) {
+        case '@POSTFORM/input':
+            return {
+                ...state,
+                inputValue: action.value
+            }
+        case '@POSTFORM/inputDanger':
+            return {
+                ...state,
+                inputDanger: action.danger
+            }
+        case '@POSTFORM/toggleMood':
+            return {
+                ...state,
+                moodToggle: !state.moodToggle
+            }
+        case '@POSTFORM/setMoodToggle':
+            return {
+                ...state,
+                moodToggle: action.toggle
+            }
+        case '@POSTFORM/selectMood':
+            return {
+                ...state,
+                mood: action.mood
+            }
+        default:
+            return state
+    }
 }
 
 /* Post item */
@@ -83,4 +119,22 @@ const initPostItemState = {
 
 export function postItem(state = initPostItemState, action) {
     //TODO
+    switch (action.type) {
+        case '@POSTITEM/toggleTooltip':
+            return {
+                ...state,
+                tooltipOpen: {
+                    [action.id]: state.postItem.tooltipOpen[action.id] ? false : true
+                }
+            }
+        case '@POSTITEM/setTooltipToggle':
+            return {
+                ...state,
+                tooltipOpen: {
+                    [action.id]: action.toggle
+                }
+            }
+        default:
+            return state
+    }
 }
