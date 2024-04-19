@@ -25,24 +25,12 @@ import { useDispatch, connect, useSelector } from 'react-redux';
 
 function PostForm(props) {
     const inputEl = useRef(null);
-
-    // TODO
-
-    // 【chun】
-    // const {
-    //     inputValue
-    //     // moodToggle
-    // } = useSelector((state) => ({
-    //     ...state.post
-    // }))
-    // 【domo】
     const [mood, setMood] = useState('na')
     const [inputValue, setInputValue] = useState('')
     const [inputDangerClass, setInputDanger] = useState(false)
     const [moodToggle, setMoodToggle] = useState(false)
     const dispatch = useDispatch()
 
-    // 【CHUN】
     useEffect(() => {
         dispatch(selectMood(mood));
     }, [mood, dispatch]);
@@ -130,31 +118,3 @@ export default connect((state) => {
         ...state.PostForm,
     };
 })(PostForm);
-
-
-    // const handleInputChange = (e) => {
-    //     const text = e.target.value
-    //     dispatch(input(e.target.value));
-    //     if (text) {
-    //         dispatch(inputDanger(inputDanger))
-    //     }
-    // };
-
-    // const handleMoodToggle = () => {
-    //     setMoodToggle(!moodToggle);
-    //     dispatch(toggleMood());
-    // }
-
-
-
-    // const handleSubmit = (e) => {
-    //     e.preventDefault();
-
-    //     inputEl.current.blur();
-    //     if (inputValue && inputValue.trim()) {
-    //         dispatch(submitAction(inputValue, unit));
-    //         setFormToggle(false);
-    //     } else {
-    //         dispatch(input(city));
-    //     }
-    // };
