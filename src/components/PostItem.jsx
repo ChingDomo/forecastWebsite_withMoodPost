@@ -11,7 +11,6 @@ import { createVote, setTooltipToggle, toggleTooltip } from 'states/post-actions
 import './PostItem.css';
 
 function PostItem(props) {
-    //TODO
 
     const { id, mood, text, ts, clearVotes, cloudsVotes, drizzleVotes, rainVotes, thunderVotes, snowVotes, windyVotes } = props;
     const [tooltipOpen, giveTooltipOpen] = useState(false)
@@ -83,8 +82,6 @@ PostItem.propTypes = {
     tooltipOpen: PropTypes.bool,
     dispatch: PropTypes.func,
 };
-
-// export default PostItem;
 
 export default connect((state, ownProps) => ({
     tooltipOpen: state.postItem.tooltipOpen[ownProps.id] ? true : false,
