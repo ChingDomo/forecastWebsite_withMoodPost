@@ -27,4 +27,5 @@ To run this application locally, make sure you have Node.js and Expo CLI install
 4.Start the Expo development server
 ```npm start```
 
+
 Feel free to fork the repository and submit pull requests!
