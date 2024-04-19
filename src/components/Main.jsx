@@ -93,8 +93,3 @@ function Main() {
 };
 
 export default Main;
-
-// export default connect(state => ({
-//     ...state.main,
-//     searchText: state.searchText,
-// }))(Main);
