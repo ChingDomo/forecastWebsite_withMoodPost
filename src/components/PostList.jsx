@@ -15,8 +15,6 @@ import { listPosts } from '../states/post-actions';
 function PostList() {
     const posts = useSelector(state => state.post.posts);
 
-    //TODO
-    // 【domo】
     const searchText = useSelector((state) => state.searchText.state)
 
     let children = (
